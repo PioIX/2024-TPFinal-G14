@@ -9,7 +9,7 @@ import Chat from "../components/chat";
 import ListadoChats from "../components/listadoChats";
 import styles from "./page2.module.css";
 import Header from "../components/header";
-import Descripcion from "../components/Descripcion";
+import Descripcion from "../components/descripcion";
 import Informacion from "../components/informacion";// Cambiado a mayúscula
 
 export default function Home() {
