@@ -59,94 +59,109 @@ io.use((socket, next) => {
 // A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
 // A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
 
-app.get('/getUser', async function(req,res) {
+app.get('/getUser', async function(req, res) {
     console.log(req.query);
-    let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where nombre = '${req.query.nombre}' and contraseña = '${req.query.contraseña}'` );
-    if (usuarioExistente.length != 0 ) {
-        res.status(200);
-        res.send({res:"usuario ingresado", id: `${usuarioExistente[0].id}`});
-    } else {
-        res.status(204);
-        res.send({res:"usuario o contraseña incorrecta",id: usuarioExistente.id});   
+    try {
+        let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where nombre = '${req.query.nombre}' and contraseña = '${req.query.contraseña}'`);
+        if (usuarioExistente.length !== 0) {
+            res.status(200);
+            res.send({ res: "usuario ingresado", id: `${usuarioExistente[0].id}` });
+        } else {
+            res.status(204);
+            res.send({ res: "usuario o contraseña incorrecta", id: null });
+        }
+    } catch (error) {
+        console.error("Error en /getUser:", error);
+        res.status(500).send({ error: "Error en el servidor. Intente nuevamente más tarde." });
     }
-})
+});
 
-app.get('/getPublicaciones', async function(req,res) {
-	console.log(req.query);
-    console.log(req.query.categoria);
-	if (req.query.categoria == "general") {
-		let publicaciones = await MySQL.realizarQuery("SELECT * FROM Publicacion");
-		res.send({publicaciones: publicaciones})
-	}
-
-	if (req.query.categoria == "misproductos") {
-		// aca uso el user id
-		let publicaciones = await MySQL.realizarQuery(`select * from Publicacion where id_usuario = '${req.query.userId}'` );
-		console.log(publicaciones)
-		res.send({publicaciones: publicaciones})
-	} else {
-		let publicaciones = await MySQL.realizarQuery(`select * from Publicacion where categoria = '${req.query.categoria}'` );
-		res.send({publicaciones: publicaciones})
-	}
-
-		
-})
-
-app.get('/getChats', async function(req,res) {
+app.get('/getPublicaciones', async function(req, res) {
     console.log(req.query);
-    let chats = await MySQL.realizarQuery(`select * from Chats_users where Id_user = ${req.query.userId}` );
-	res.send({chats: chats})
-	
-})
+    try {
+        let publicaciones;
+        if (req.query.categoria === "general") {
+            publicaciones = await MySQL.realizarQuery("SELECT * FROM Publicacion");
+        } else if (req.query.categoria === "misproductos") {
+            publicaciones = await MySQL.realizarQuery(`select * from Publicacion where id_usuario = '${req.query.userId}'`);
+        } else {
+            publicaciones = await MySQL.realizarQuery(`select * from Publicacion where categoria = '${req.query.categoria}'`);
+        }
+        res.send({ publicaciones: publicaciones });
+    } catch (error) {
+        console.error("Error en /getPublicaciones:", error);
+        res.status(500).send({ error: "Error al obtener las publicaciones. Intente nuevamente más tarde." });
+    }
+});
 
-app.post('/addUser', async function(req,res) {
+app.get('/getChats', async function(req, res) {
+    console.log(req.query);
+    try {
+        let chats = await MySQL.realizarQuery(`select * from Chats_users where Id_user = ${req.query.userId}`);
+        res.send({ chats: chats });
+    } catch (error) {
+        console.error("Error en /getChats:", error);
+        res.status(500).send({ error: "Error al obtener los chats. Intente nuevamente más tarde." });
+    }
+});
+
+app.post('/addUser', async function(req, res) {
     console.log(req.body);
-    let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
-	console.log(usuarioExistente);
-    if (usuarioExistente.length != 0) {
-        res.status(204);
-        res.send("ya existe ese usuario");
-    } else {
-		await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, puntaje)
-			VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 0)`);
-
-		let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
-		res.status(200);
-        res.send({res:"usuario ingresado", id: `${usuarioExistente[0].id}`});
+    try {
+        let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
+        if (usuarioExistente.length !== 0) {
+            res.status(204);
+            res.send("Ya existe ese usuario");
+        } else {
+            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, puntaje) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 0)`);
+            let nuevoUsuario = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
+            res.status(200).send({ res: "usuario ingresado", id: `${nuevoUsuario[0].id}` });
+        }
+    } catch (error) {
+        console.error("Error en /addUser:", error);
+        res.status(500).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
     }
-})
-
-app.get('/', (req, res) => {
-	console.log(`[REQUEST - ${req.method}] ${req.url}`);
 });
 
 app.post('/login', async (req, res) => {
-
-	let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where nombre = '${req.body.nombre}' and contraseña = '${req.body.contraseña}'` );
-    if (usuarioExistente.length != 0 ) {
-        //res.status(200);
-		req.session.idUser = usuarioExistente[0].id
-        res.send({status:200,res:"usuario ingresado", id: `${usuarioExistente[0].id}`});
-    } else {
-        //res.status(204);
-        res.send({status:204, res:"usuario o contraseña incorrecta",id: usuarioExistente.id});   
+    try {
+        let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where nombre = '${req.body.nombre}' and contraseña = '${req.body.contraseña}'`);
+        if (usuarioExistente.length !== 0) {
+            req.session.idUser = usuarioExistente[0].id;
+            res.send({ status: 200, res: "usuario ingresado", id: `${usuarioExistente[0].id}` });
+        } else {
+            res.send({ status: 204, res: "usuario o contraseña incorrecta", id: null });
+        }
+    } catch (error) {
+        console.error("Error en /login:", error);
+        res.status(500).send({ error: "Error en el inicio de sesión. Intente nuevamente más tarde." });
     }
-
 });
 
 app.post('/getUserHeader', async (req, res) => {
-	let usuarioExistente = await MySQL.realizarQuery(`select nombre from Usuarios where id =${req.body.userId}` );
-    console.log(usuarioExistente);
-	if(usuarioExistente.length != 0)
-		res.send({nombre: usuarioExistente[0].nombre});
-	else
-		res.send({nombre: ""});
+    try {
+        let usuarioExistente = await MySQL.realizarQuery(`select nombre from Usuarios where id =${req.body.userId}`);
+        if (usuarioExistente.length !== 0) {
+            res.send({ nombre: usuarioExistente[0].nombre });
+        } else {
+            res.send({ nombre: "" });
+        }
+    } catch (error) {
+        console.error("Error en /getUserHeader:", error);
+        res.status(500).send({ error: "Error al obtener el nombre del usuario. Intente nuevamente más tarde." });
+    }
 });
 
 app.delete('/login', (req, res) => {
-	console.log(`[REQUEST - ${req.method}] ${req.url}`);
-	res.send(null);
+    console.log(`[REQUEST - ${req.method}] ${req.url}`);
+    res.send(null);
 });
+
+app.get('/', (req, res) => {
+    console.log(`[REQUEST - ${req.method}] ${req.url}`);
+    res.send("Servidor activo");
+});
+
 
 
 

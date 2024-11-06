@@ -16,8 +16,7 @@ export default function home() {
 
   const [publics, setPublics] = useState([])
 
-  async function fetchProductos(event) {
-    var categoria = event.target.name;
+  async function getPublicaciones(categoria) {
     console.log("categoria: ", categoria)
     let url = 'http://localhost:4000/getPublicaciones' + '?userId=' + localStorage.getItem("userId") + '&categoria=' + categoria;
     console.log("url: ", url)
@@ -32,6 +31,15 @@ export default function home() {
     localStorage.setItem("publicId", result.publicaciones)
     setPublics(result.publicaciones)
   }
+
+  async function fetchProductos(event) {
+    var categoria = event.target.name;
+    await getPublicaciones(categoria);
+  }
+
+ useEffect(() => {
+    getPublicaciones("general");
+  }, []);
 
   return (<>
     <div className={styles.container}>

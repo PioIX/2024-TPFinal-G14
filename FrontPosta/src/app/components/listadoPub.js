@@ -1,7 +1,7 @@
 "use client"
 import Chat from "../components/chat";
 import Publicacion from "./publicacion";
-import styles from "@/app/components/listadoPub.modules.css"
+import styles from "@/app/components/listadoPub.module.css"
 const ListadoPublics = ({publics}) => {
 
     if (publics.length == 0) {
@@ -9,11 +9,12 @@ const ListadoPublics = ({publics}) => {
     } else {
       
       return (
-        <ul className={styles.hola}>
+        <ul className={styles.container}>
           {
             publics.length != 0 && 
-            publics.map((publics) =>
+            publics.map((publics) => (
               <Publicacion key={publics.id} imageUrl={publics.icono} productName={publics.nombrePub} precio={publics.precio}></Publicacion>
+            )
             )
           }
         </ul>
