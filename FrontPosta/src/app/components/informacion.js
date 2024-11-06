@@ -2,7 +2,7 @@
 import styles from "./informacion.module.css";
 import React from 'react';
 
-const Informacion = ({ precio, productName, imageUrl, descripcion }) => {
+const Informacion = ({ precio, productName, imageUrl}) => {
   return (
     <div className={styles.container}>
       <div className={styles.cuadro}>
@@ -12,7 +12,6 @@ const Informacion = ({ precio, productName, imageUrl, descripcion }) => {
           <div className={styles.precio}>{precio}</div>
           <button className={styles.botonComprar}>Comprar ahora</button>
         </div>
-        <div className={styles.descripcion}>{descripcion}</div> 
       </div>
     </div>
   );

@@ -54,6 +54,11 @@ export default function Header(props) {
         setUserId(0);
         router.push("/home");
     }
+    
+    function redirigir() {
+        const url = "/home?userId=" +  localStorage.getItem("userId");
+        router.push(url);
+    }
 
     console.log("ID", userId);
 
@@ -62,7 +67,7 @@ export default function Header(props) {
          <header className={styles.header1} >
                 <div className={styles.topBar} >
                     <div className={styles.logo}>
-                    <img src="images/logoCacho.png" className={styles.logoImage} alt="Logo" />
+                    <a onClick={redirigir}><img src="images/logoCacho.png" className={styles.logoImage} alt="Logo" /></a>
                  </div>
                     <div className={styles.searchBar}>
                  </div>

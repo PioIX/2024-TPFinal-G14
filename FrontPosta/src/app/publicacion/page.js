@@ -11,7 +11,26 @@ import styles from "./page2.module.css";
 import Header from "../components/header";
 import Informacion from "../components/informacion"; // Cambiado a mayúscula
 
-export default function Home() {
+
+
+export default function Publicacion() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const idPub = urlParams.get("idpub")
+
+  async function getPublicacion(categoria) {
+    console.log("categoria: ", categoria)
+    let url = 'http://localhost:4000/getPublicaciones' + '?idPub=' + idPub ;
+    console.log("url: ", url)
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    const result = await response.json()
+    setPublic(result)
+  }
+
   return (
     <div className={styles.container}>
       <Header />
