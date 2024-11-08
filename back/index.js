@@ -94,6 +94,18 @@ app.get('/getPublicaciones', async function(req, res) {
     }
 });
 
+app.get('/getPublicacion', async function(req, res) {
+    console.log(req.query);
+    try {
+        let publicacion;
+            publicacion = await MySQL.realizarQuery(`SELECT * FROM Publicacion where id = ${req.query.idPub}`);
+        res.send({ publicacion: publicacion });
+    } catch (error) {
+        console.error("Error en /getPublicacion:", error);
+        res.status(500).send({ error: "Error al obtener la publicacion. Intente nuevamente más tarde." });
+    }
+});
+
 app.get('/getChats', async function(req, res) {
     console.log(req.query);
     try {

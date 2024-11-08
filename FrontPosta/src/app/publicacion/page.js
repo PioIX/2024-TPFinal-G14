@@ -16,10 +16,11 @@ import Informacion from "../components/informacion"; // Cambiado a mayúscula
 export default function Publicacion() {
   const urlParams = new URLSearchParams(window.location.search);
   const idPub = urlParams.get("idpub")
+  const [publicacionPage, setPublicacion] = useState([])
 
   async function getPublicacion(categoria) {
     console.log("categoria: ", categoria)
-    let url = 'http://localhost:4000/getPublicaciones' + '?idPub=' + idPub ;
+    let url = 'http://localhost:4000/getPublicacion' + '?idPub=' + idPub ;
     console.log("url: ", url)
     const response = await fetch(url, {
       method: "GET",
@@ -28,17 +29,21 @@ export default function Publicacion() {
       }
     })
     const result = await response.json()
-    setPublic(result)
+    console.log("resultado de la publicacionPage: ", result.publicacion)
+    setPublicacion(result)
   }
+
+  useEffect(() => {
+    getPublicacion();
+  }, []);
 
   return (
     <div className={styles.container}>
       <Header />
       <Informacion 
-      precio="$30.000" 
-      productName="Pelota Futbol Nassau Pro Championship Profesional Cosida N°5 Campo Color Blanco/Negro" 
-      imageUrl="https://www.deportesonce.com.ar/wp-content/uploads/virtuemart/product/championship-29.jpg"
-      descripcion="gkbiosehgbje"
+      precio={publicacionPage.precio} 
+      productName={publicacionPage.nombrePub} 
+      imageUrl={publicacionPage.icono}
       ></Informacion>
     </div>
   );
