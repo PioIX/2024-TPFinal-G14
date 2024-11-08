@@ -18,8 +18,8 @@ export default function Publicacion() {
   const idPub = urlParams.get("idpub")
   const [publicacionPage, setPublicacion] = useState([])
 
-  async function getPublicacion(categoria) {
-    console.log("categoria: ", categoria)
+  async function getPublicacion() {
+    console.log("id de la publicacion", idPub)
     let url = 'http://localhost:4000/getPublicacion' + '?idPub=' + idPub ;
     console.log("url: ", url)
     const response = await fetch(url, {
@@ -30,7 +30,7 @@ export default function Publicacion() {
     })
     const result = await response.json()
     console.log("resultado de la publicacionPage: ", result.publicacion)
-    setPublicacion(result)
+    setPublicacion(result.publicacion)
   }
 
   useEffect(() => {

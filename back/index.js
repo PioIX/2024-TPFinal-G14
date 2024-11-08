@@ -99,7 +99,7 @@ app.get('/getPublicacion', async function(req, res) {
     try {
         let publicacion;
             publicacion = await MySQL.realizarQuery(`SELECT * FROM Publicacion where id = ${req.query.idPub}`);
-        res.send({ publicacion: publicacion });
+        res.send({ publicacion: publicacion[0] });
     } catch (error) {
         console.error("Error en /getPublicacion:", error);
         res.status(500).send({ error: "Error al obtener la publicacion. Intente nuevamente más tarde." });
