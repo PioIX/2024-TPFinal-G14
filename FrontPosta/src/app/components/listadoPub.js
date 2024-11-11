@@ -13,7 +13,7 @@ const ListadoPublics = ({publics}) => {
           {
             publics.length != 0 && 
             publics.map((publics) => (
-              <Publicacion idPub={publics.id} key={publics.id} imageUrl={publics.icono} productName={publics.nombrePub} precio={publics.precio}></Publicacion>
+              <Publicacion idPub={publics.id} idUserPub={publics.id_usuario} key={publics.id} imageUrl={publics.icono} productName={publics.nombrePub} precio={publics.precio}></Publicacion>
             )
             )
           }

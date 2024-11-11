@@ -3,12 +3,14 @@ import { useRouter } from "next/navigation";
 import styles from "./publicacion.module.css";
 import React from 'react';
 
-const Publicacion = ({ idPub, imageUrl, precio, productName  }) => {
+const Publicacion = ({ idPub, idUserPub, imageUrl, precio, productName  }) => {
   const router = useRouter();
 
   function redirigirPublicacion(){
     const url = "/publicacion?userId=" +  localStorage.getItem("userId") + '&idpub=' + idPub;
     router.push(url);
+    localStorage.setItem("idUserPub", idUserPub)
+    
   }
   return (
     <div className={styles.cuadro}>

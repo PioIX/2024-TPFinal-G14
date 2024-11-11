@@ -35,16 +35,19 @@ export default function Publicacion() {
 
   useEffect(() => {
     getPublicacion();
-  }, []);
+  }, [idPub]);
 
   return (
     <div className={styles.container}>
       <Header />
+      { publicacionPage != undefined && 
       <Informacion 
       precio={publicacionPage.precio} 
       productName={publicacionPage.nombrePub} 
       imageUrl={publicacionPage.icono}
       ></Informacion>
+
+      }
     </div>
   );
 }
