@@ -150,13 +150,13 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/getUserHeader', async (req, res) => {
+app.get('/getUserMoney', async (req, res) => {
     try {
-        let usuarioExistente = await MySQL.realizarQuery(`select nombre from Usuarios where id =${req.body.userId}`);
-        if (usuarioExistente.length !== 0) {
-            res.send({ nombre: usuarioExistente[0].nombre });
+        let usuarioPlata = await MySQL.realizarQuery(`select nombre, Plata from Usuarios where id =${req.query.userId}`);
+        if (usuarioPlata.length !== 0) {
+            res.send({ nombre: usuarioPlata[0].nombre, plata: usuarioPlata[0].Plata});
         } else {
-            res.send({ nombre: "" });
+            res.send({ nombre: "", plata: 0 });
         }
     } catch (error) {
         console.error("Error en /getUserHeader:", error);

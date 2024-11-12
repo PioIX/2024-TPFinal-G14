@@ -10,12 +10,15 @@ import ListadoChats from "../components/listadoChats";
 import styles from "./page2.module.css";
 import Header from "../components/header";
 import Informacion from "../components/informacion"; // Cambiado a mayúscula
+import { useRouter } from "next/navigation";
 
 
 
 export default function Publicacion() {
+  const router = useRouter();
   const urlParams = new URLSearchParams(window.location.search);
   const idPub = urlParams.get("idpub")
+  const idUser = urlParams.get("userId")
   const [publicacionPage, setPublicacion] = useState([])
 
   async function getPublicacion() {
@@ -37,9 +40,15 @@ export default function Publicacion() {
     getPublicacion();
   }, [idPub]);
 
+  function redigiriPorCategoria(event) {
+    console.log(idUser)
+    let categoria = event.target.name;
+    router.push("/home?userId=" + idUser + "&categoria=" + categoria);
+  }
+
   return (
     <div className={styles.container}>
-      <Header />
+      <Header onClick={redigiriPorCategoria} />
       { publicacionPage != undefined && 
       <Informacion 
       precio={publicacionPage.precio} 

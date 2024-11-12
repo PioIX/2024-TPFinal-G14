@@ -11,6 +11,7 @@ export default function Header(props) {
     const router = useRouter();
     const [userId, setUserId] = useState(0);
     const [username, setUsername] = useState("");
+    const [userPlata, setUserPlata] = useState("");
 
     async function getNameHeader(){
 
@@ -18,22 +19,16 @@ export default function Header(props) {
         const idUsuario = urlParams.get("userId")
         setUserId(idUsuario);
 
-        const data = {
-            userId: idUsuario,
-        }
-
-        const response = await fetch('http://localhost:4000/getUserHeader',{
-            method:"POST",
+        const response = await fetch('http://localhost:4000/getUserMoney?userId=' + idUsuario,{
+            method:"GET",
             headers: {
                 "Content-Type": "application/json",
             },
-            body:JSON.stringify(data),
         })
-
-                 
         var respuesta = await response.json();
-        console.log(respuesta)
+        console.log("datos de usuario", respuesta)
         setUsername(respuesta.nombre)
+        setUserPlata(respuesta)//------------------------
         localStorage.setItem("userName", respuesta.nombre)
     }
 
@@ -75,6 +70,7 @@ export default function Header(props) {
                         userId > 0 ?
                         <div className={styles.authButtons}>
                             <h2>{username}</h2>
+                            <h2>dinero</h2>
                             <button className={styles.login} onClick={redirigirLogout}>Logout</button>
                         </div>
 

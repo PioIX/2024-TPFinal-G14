@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import Button from "../components/boton";
 import Title from "../components/title";
@@ -12,39 +12,50 @@ import Header from "../components/header";
 import Publicacion from "../components/publicacion";
 import ListadoPublics from "../components/listadoPub";
 
-export default function home() {
-
-  const [publics, setPublics] = useState([])
+export default function Home() {
+  const [publics, setPublics] = useState([]);
 
   async function getPublicaciones(categoria) {
-    console.log("categoria: ", categoria)
-    let url = 'http://localhost:4000/getPublicaciones' + '?userId=' + localStorage.getItem("userId") + '&categoria=' + categoria;
-    console.log("url: ", url)
+    console.log("categoria: ", categoria);
+    let url =
+      'http://localhost:4000/getPublicaciones' +
+      "?userId=" +
+      localStorage.getItem("userId") +
+      "&categoria=" +
+      categoria;
+    console.log("url: ", url);
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      }
-    })
-    const result = await response.json()
-    console.log("result: ", result.publicaciones)
-    localStorage.setItem("publicId", result.publicaciones)
-    setPublics(result.publicaciones)
+      },
+    });
+    const result = await response.json();
+    console.log("result: ", result.publicaciones);
+    localStorage.setItem("publicId", result.publicaciones);
+    setPublics(result.publicaciones);
   }
 
   async function fetchProductos(event) {
-    var categoria = event.target.name;
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoriaURL = urlParams.get("categoria");
+
+    // Usamos un valor predeterminado para categoria si no hay categoriaURL
+    const categoria = categoriaURL || event.target.name;
+
     await getPublicaciones(categoria);
   }
 
- useEffect(() => {
+  useEffect(() => {
     getPublicaciones("general");
   }, []);
 
-  return (<>
-    <div className={styles.container}>
-      <Header onClick={fetchProductos} />
-      <ListadoPublics publics={publics}></ListadoPublics>
-    </div>
-  </>)
+  return (
+    <>
+      <div className={styles.container}>
+        <Header onClick={fetchProductos} />
+        <ListadoPublics publics={publics}></ListadoPublics>
+      </div>
+    </>
+  );
 }
