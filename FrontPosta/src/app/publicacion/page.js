@@ -19,6 +19,7 @@ export default function Publicacion() {
   const urlParams = new URLSearchParams(window.location.search);
   const idPub = urlParams.get("idpub")
   const idUser = urlParams.get("userId")
+  
   const [publicacionPage, setPublicacion] = useState([])
 
   async function getPublicacion() {

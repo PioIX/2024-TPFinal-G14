@@ -125,7 +125,7 @@ app.post('/addUser', async function(req, res) {
             res.status(204);
             res.send("Ya existe ese usuario");
         } else {
-            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, puntaje) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 0)`);
+            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', '${req.body.plata}')`);
             let nuevoUsuario = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
             res.status(200).send({ res: "usuario ingresado", id: `${nuevoUsuario[0].id}` });
         }

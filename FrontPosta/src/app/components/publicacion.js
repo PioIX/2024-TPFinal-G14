@@ -7,10 +7,9 @@ const Publicacion = ({ idPub, idUserPub, imageUrl, precio, productName  }) => {
   const router = useRouter();
 
   function redirigirPublicacion(){
+    localStorage.setItem("idUserPub", idUserPub)
     const url = "/publicacion?userId=" +  localStorage.getItem("userId") + '&idpub=' + idPub;
     router.push(url);
-    localStorage.setItem("idUserPub", idUserPub)
-    
   }
   return (
     <div className={styles.cuadro}>

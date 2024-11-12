@@ -28,8 +28,9 @@ export default function Header(props) {
         var respuesta = await response.json();
         console.log("datos de usuario", respuesta)
         setUsername(respuesta.nombre)
-        setUserPlata(respuesta)//------------------------
+        setUserPlata(respuesta.plata)
         localStorage.setItem("userName", respuesta.nombre)
+        localStorage.setItem("userPlata", respuesta.plata)
     }
 
     useEffect(() => {
@@ -70,7 +71,7 @@ export default function Header(props) {
                         userId > 0 ?
                         <div className={styles.authButtons}>
                             <h2>{username}</h2>
-                            <h2>dinero</h2>
+                            <h2>${userPlata}</h2>
                             <button className={styles.login} onClick={redirigirLogout}>Logout</button>
                         </div>
 

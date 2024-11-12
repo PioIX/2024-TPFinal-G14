@@ -8,6 +8,35 @@ const Informacion = ({ precio, productName, imageUrl}) => {
     location.href = "/loginPage"
   }
 
+  async function comprar(){
+    
+    if(localStorage.getItem(userPlata) < precio){
+      alert("no tiene dinero suficiente para realizar el pago")
+    }else{
+      const data = {
+        idVenderor : localStorage.getItem(idUserPub),
+        PlataUsuario : localStorage.getItem(userPlata) ,
+        idUserCompra : localStorage.getItem(userId),
+  
+      }
+  
+     const response = await fetch('http://localhost:4000/Comprar',{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+            },
+        body:JSON.stringify(data),
+     }) 
+    
+      var respuesta = await response.json();
+  
+      if (response.status == 200)
+        alert("Compra concretada correctamente correctamente");
+      if (response.status == 204)
+        alert("fallo la compra");
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.cuadro}>
