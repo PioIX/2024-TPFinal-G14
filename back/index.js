@@ -106,6 +106,18 @@ app.get('/getPublicacion', async function(req, res) {
     }
 });
 
+app.get('/getPlataVendedor', async function(req, res) {
+    console.log(req.query);
+    try {
+        let PlataVendedorRes;
+        PlataVendedorRes = await MySQL.realizarQuery(`SELECT Plata FROM Usuarios where id = ${req.query.idVendedorPub}`);
+        res.send({ PlataVendedorRes: PlataVendedorRes });
+    } catch (error) {
+        console.error("Error en /getPublicacion:", error);
+        res.status(500).send({ error: "Error al obtener el dato. Intente nuevamente más tarde." });
+    }
+});
+
 app.get('/getChats', async function(req, res) {
     console.log(req.query);
     try {
@@ -125,7 +137,7 @@ app.post('/addUser', async function(req, res) {
             res.status(204);
             res.send("Ya existe ese usuario");
         } else {
-            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', '${req.body.plata}')`);
+            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 10000)`);
             let nuevoUsuario = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
             res.status(200).send({ res: "usuario ingresado", id: `${nuevoUsuario[0].id}` });
         }
@@ -134,6 +146,25 @@ app.post('/addUser', async function(req, res) {
         res.status(500).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
     }
 });
+
+app.post('/comprar', async function(req, res) {
+    console.log(req.body);
+    try {
+        let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
+        if (usuarioExistente.length !== 0) {
+            res.status(204);
+            res.send("Ya existe ese usuario");
+        } else {
+            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 10000)`);
+            let nuevoUsuario = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
+            res.status(200).send({ res: "usuario ingresado", id: `${nuevoUsuario[0].id}` });
+        }
+    } catch (error) {
+        console.error("Error en /addUser:", error);
+        res.status(500).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
+    }
+});
+
 
 app.post('/login', async (req, res) => {
     try {
