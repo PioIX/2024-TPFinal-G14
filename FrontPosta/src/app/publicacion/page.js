@@ -50,8 +50,8 @@ export default function Publicacion() {
       }
     })
     const result = await response.json()
-    console.log("resultado plata del vendedor: ", result.PlataVendedorRes[0])
-    localStorage.setItem("plataVendedor", result.PlataVendedorRes[0])
+    console.log("resultado plata del vendedor: ", result.PlataVendedorRes[0].Plata)
+    localStorage.setItem("plataVendedor", result.PlataVendedorRes[0].Plata)
   }
 
   useEffect(() => {

@@ -150,18 +150,13 @@ app.post('/addUser', async function(req, res) {
 app.post('/comprar', async function(req, res) {
     console.log(req.body);
     try {
-        let usuarioExistente = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
-        if (usuarioExistente.length !== 0) {
-            res.status(204);
-            res.send("Ya existe ese usuario");
-        } else {
-            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 10000)`);
-            let nuevoUsuario = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
-            res.status(200).send({ res: "usuario ingresado", id: `${nuevoUsuario[0].id}` });
-        }
+        await MySQL.realizarQuery(`UPDATE Publicacion SET id_usuario = '${req.body.idUserCompra}' WHERE id = '${req.body.idPub}'`);
+        await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
+        res.status(200);
+    
     } catch (error) {
         console.error("Error en /addUser:", error);
-        res.status(500).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
+        res.status(204).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
     }
 });
 

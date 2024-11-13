@@ -10,27 +10,25 @@ const Informacion = ({ precio, productName, imageUrl}) => {
 
   async function comprar(){
     // Asegúrate de obtener el valor de "PlataUsuario" de localStorage
-    const plataUsuario = parseInt(localStorage.getItem("PlataUsuario"));
-    const precioNum = parseInt(precio);
-  
-    // Verifica si se pudo obtener el dinero del usuario correctamente
-    if (isNaN(plataUsuario)) {
-      alert("No se pudo obtener el saldo del usuario.");
-      return;
-    }
-  
-    const plataNueva = plataUsuario - precioNum;
-    const plataNuevaVendedor = 
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const idPub = urlParams.get("idpub")
+    const plataNueva = parseInt(localStorage.getItem("userPlata")) - parseInt(precio);
+    const plataNuevaVendedor = parseInt(localStorage.getItem("plataVendedor")) + parseInt(precio)
+    console.log("userPlata: ", parseInt(localStorage.getItem("userPlata")))
+    console.log ("el precio es: ", parseInt(precio))
+    console.log ("la plata del vendedor seria: ", plataNuevaVendedor)
     console.log("el resto es: ", plataNueva);
       
     if (plataNueva < 0) {
       alert("No tiene dinero suficiente para realizar el pago.");
     } else {
       const data = {
-        idvendedor: localStorage.getItem("idUserPub"),
-        PlataUsuario: plataUsuario, // Usamos el valor de PlataUsuario aquí
+        idPub: idPub,
+        idvendedor: localStorage.getItem("idUserPub"), 
         idUserCompra: localStorage.getItem("userId"),
-        plataNueva: plataNueva
+        plataNueva: plataNueva,
+        plataNuevaVendedor: plataNuevaVendedor
       };
     
       const response = await fetch('http://localhost:4000/Comprar', {
