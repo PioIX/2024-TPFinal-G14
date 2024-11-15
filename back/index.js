@@ -151,9 +151,9 @@ app.post('/comprar', async function(req, res) {
     console.log(req.body);
     try {
         await MySQL.realizarQuery(`UPDATE Publicacion SET id_usuario = '${req.body.idUserCompra}' WHERE id = '${req.body.idPub}'`);
-        await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
+        await MySQL.realizarQuery(`UPDATE Usuarios SET Plata = '${req.body.plataNueva}' WHERE id = '${req.body.idUserCompra}'`);
+        await MySQL.realizarQuery(`UPDATE Usuarios SET Plata = '${req.body.plataNuevaVendedor}' WHERE id = '${req.body.idvendedor}'`);
         res.status(200);
-    
     } catch (error) {
         console.error("Error en /addUser:", error);
         res.status(204).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
