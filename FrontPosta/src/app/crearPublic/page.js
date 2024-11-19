@@ -4,6 +4,46 @@ import Header from "../components/header";
 import styles from "./page.module.css";
 
 export default function CrearPublicacion() {
+    const [Url, setURL] = useState("")
+    const [name, setNamePub] = useState("")
+    const [precio, setPrecio] = useState("")
+    const [categoria, setCategoria] = useState("")
+    const [Id, setIdCrea ] = useState(0)
+
+    useEffect(() => {
+        manejarId();
+    },[])
+
+    async function crearPublicaion(){            
+        const data = {
+            Url: Url,
+            name: name,
+            precio: precio,
+            categoria: categoria,
+            Iduser: Id,
+        }
+        const response = await fetch('http://localhost:4000/crearPub',{
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body:JSON.stringify(data),
+        }) 
+        
+        var respuesta = await response.json();
+
+        if (response.status == 200)
+            alert("Publicaicon creada correctamente");
+            redirigir()
+        if (response.status == 500)
+            alert("fallo al crear publicacion");
+    }
+
+    function redirigir() {
+        location.href = "/home?userId=" +  localStorage.getItem("userId")
+    }
+
+
     function manejarURL(event) {
         setURL(event.target.value);
     }
@@ -20,8 +60,8 @@ export default function CrearPublicacion() {
         setCategoria(event.target.value);
     }
 
-    function crearPublicaion() {
-        // Implementación de la lógica para crear la publicación
+    function manejarId() {
+        setIdCrea(localStorage.getItem("userName"));
     }
 
     return (

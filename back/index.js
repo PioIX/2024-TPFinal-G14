@@ -160,6 +160,19 @@ app.post('/comprar', async function(req, res) {
     }
 });
 
+app.post('/crearPub', async function(req, res) {
+    console.log("datos de la creacion: ", req.body);
+    try {
+        
+        await MySQL.realizarQuery(`INSERT INTO Publicacion (icono , nombrePub, precio, categoria, id_usuario ) VALUES ('${req.body.Url}','${req.body.name}','${req.body.precio}','${req.body.categoria}','${req.body.Iduser}')`);
+        res.status(200)
+        
+    } catch (error) {
+        console.error("Error en /addUser:", error);
+        res.status(500).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
+    }
+});
+
 
 app.post('/login', async (req, res) => {
     try {

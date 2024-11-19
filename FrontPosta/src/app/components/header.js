@@ -44,6 +44,10 @@ export default function Header(props) {
     function redirigirSingin(){
         router.push("/singinPage");
     }
+
+    function redirigirCrear(){
+        router.push("/crearPublic");
+    }
     
     function redirigirLogout() {
         localStorage.setItem("userId", 0)
@@ -72,6 +76,7 @@ export default function Header(props) {
                         <div className={styles.authButtons}>
                             <h2>{username}</h2>
                             <h2>${userPlata}</h2>
+                            <button className={styles.login} onClick={redirigirCrear}>Crear publicación</button>
                             <button className={styles.login} onClick={redirigirLogout}>Logout</button>
                         </div>
 
