@@ -46,11 +46,12 @@ export default function Header(props) {
     }
 
     function redirigirCrear(){
-        router.push("/crearPublic");
+        router.push("/crearPublic?userId=" +  localStorage.getItem("userId"));
     }
     
     function redirigirLogout() {
         localStorage.setItem("userId", 0)
+        localStorage.setItem("userID", 0)
         setUserId(0);
         router.push("/home");
     }

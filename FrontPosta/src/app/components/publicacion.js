@@ -16,7 +16,7 @@ const Publicacion = ({ idPub, idUserPub, imageUrl, precio, productName  }) => {
       <img src={imageUrl} alt={productName} className={styles.image} />
       <div className={styles.productName}>{productName}</div>
       <div className={styles.precio}>{precio}$</div>
-      <button className={styles.botonComprar} onClick={redirigirPublicacion}>Comprar</button>
+      <button className={styles.botonComprar} onClick={redirigirPublicacion}>Ver más</button>
     </div>
   );
 };

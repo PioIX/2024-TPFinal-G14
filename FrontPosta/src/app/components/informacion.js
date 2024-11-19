@@ -1,8 +1,10 @@
 "use client";
 import styles from "./informacion.module.css";
 import React, { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 const Informacion = ({ precio, productName, imageUrl}) => {
+  const router = useRouter();
 
   function redirigirLoginPub() {
     location.href = "/loginPage"
@@ -15,7 +17,6 @@ const Informacion = ({ precio, productName, imageUrl}) => {
     const idPub = urlParams.get("idpub")
     const plataNueva = parseInt(localStorage.getItem("userPlata")) - parseInt(precio);
     const plataNuevaVendedor = parseInt(localStorage.getItem("plataVendedor")) + parseInt(precio)
-    const [aptoCompra, setAptoCompra] = useState("true")
     console.log("userPlata: ", parseInt(localStorage.getItem("userPlata")))
     console.log ("el precio es: ", parseInt(precio))
     console.log ("la plata del vendedor seria: ", plataNuevaVendedor)
@@ -23,9 +24,8 @@ const Informacion = ({ precio, productName, imageUrl}) => {
       
     if (plataNueva < 0) {
       alert("No tiene dinero suficiente para realizar el pago.");
-      setAptoCompra("false")
     } 
-    if (aptoCompra == "true") {
+    else {
       const data = {
         idPub: idPub,
         idvendedor: localStorage.getItem("idUserPub"), 
@@ -42,21 +42,27 @@ const Informacion = ({ precio, productName, imageUrl}) => {
         body: JSON.stringify(data),
       });
       
-      console.log("respuesta: ", response)
-    
-      if (response.status === 200) {
+      const respuesta = await response.json();
+      console.log("respuesta: ", respuesta);
+      localStorage.setItem("idUserPub", localStorage.getItem("userID") )
+      
+      if (respuesta.status == 200) {
         alert("Compra concretada correctamente.");
+        
         setTimeout(() => {
           location.reload();
         }, 1000); // Retardo de 1 segundo
-      } else if (response.status === 204) {
+      } else if (respuesta.status === 500) {
         alert("Falló la compra.");
       } else {
         alert("Error en la compra.");
       }
     }
   }
-  
+
+  function redirigirEdit(){
+    router.push("/editPublic?userId=" +  localStorage.getItem("userId"));
+  }
 
   return (
     <div className={styles.container}>
@@ -67,7 +73,7 @@ const Informacion = ({ precio, productName, imageUrl}) => {
           <div className={styles.precio}>${precio}</div>
           {
             localStorage.getItem("userId") == localStorage.getItem("idUserPub") ? 
-            <button className={styles.botonComprar}>Editar publicaciòn</button>
+            <button className={styles.botonComprar} onClick={redirigirEdit}>Editar publicaciòn</button>
             :
             localStorage.getItem("userId") > 0 ?
             <button className={styles.botonComprar} onClick={comprar}>Comprar ahora</button>

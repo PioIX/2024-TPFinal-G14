@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header";
 import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 
-export default function CrearPublicacion() {
+export default function editPublicacion() {
+    const router = useRouter();
     const [Url, setURL] = useState("")
     const [name, setNamePub] = useState("")
     const [precio, setPrecio] = useState(0)
@@ -12,6 +14,9 @@ export default function CrearPublicacion() {
 
     useEffect(() => {
         manejarId();
+        let publicacion = JSON.parse(localStorage.getItem('publicacion'));
+        setURL(publicacion.icono);
+        setCategoria(publicacion.categoria);
     },[])
 
     async function crearPublicaion(){            
@@ -75,6 +80,7 @@ export default function CrearPublicacion() {
                     type="text"
                     placeholder="Ingresar URL"
                     id="URL-crear"
+                    value={Url}
                 />
                 <h2 className={styles.title}>Nombre de la publicación</h2>
                 <input
@@ -93,7 +99,7 @@ export default function CrearPublicacion() {
                     id="precio-crear"
                 />
                 <h2 className={styles.title}>Categoría de la publicación</h2>
-                <select className={styles.select} onChange={manejarCategoria}>
+                <select className={styles.select} onChange={manejarCategoria} value={categoria}>
                     <option value="" disabled selected>
                         Seleccionar categoría
                     </option>

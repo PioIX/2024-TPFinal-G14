@@ -36,6 +36,7 @@ export default function Publicacion() {
     })
     const result = await response.json()
     console.log("resultado de la publicacionPage: ", result.publicacion)
+    localStorage.setItem('publicacion', JSON.stringify(result.publicacion));
     setPublicacion(result.publicacion)
   }
 

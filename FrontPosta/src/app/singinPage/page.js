@@ -62,11 +62,12 @@ export default function loginPage(){
         
         var respuesta = await response.json();
 
-        if (response.status == 200)
+        if (respuesta.status == 200)
             alert("registrado correctamente");
-        localStorage.setItem("userId", respuesta.id)
+            localStorage.setItem("userId", respuesta.id)
+            localStorage.setItem("userID", respuesta.id)
             redirigir()
-        if (response.status == 204)
+        if (respuesta.status == 204)
             alert("fallo el registro");
     }
 
@@ -83,7 +84,7 @@ export default function loginPage(){
     }
 
     function redirigir() {
-        location.href = "/home?userId=" +  localStorage.getItem("userId")
+        location.href = "/home?userId=" +  localStorage.getItem("userID")
     }
 
     function redirigirLogin(){

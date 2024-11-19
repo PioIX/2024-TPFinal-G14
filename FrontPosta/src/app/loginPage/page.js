@@ -34,6 +34,7 @@ export default function loginPage(){
         var respuesta = await response.json();
         console.log(respuesta)
         localStorage.setItem("userId", respuesta.id)
+        localStorage.setItem("userID", respuesta.id)
         if (respuesta.status == 200) {
             setUsuarioLoged(respuesta.id)
             alert("ingreso exitoso");
