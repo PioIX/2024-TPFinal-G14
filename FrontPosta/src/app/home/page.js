@@ -33,7 +33,7 @@ export default function home(){
         />
         <Publicacion 
           precio="$43.000" 
-          productName="Repasador" 
+          productName="Camperon" 
           imageUrl="https://http2.mlstatic.com/D_NQ_NP_846479-MLA49647420158_042022-O.webp" 
         />
         <Publicacion 
