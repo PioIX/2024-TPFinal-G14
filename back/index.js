@@ -168,7 +168,7 @@ app.post('/crearPub', async function(req, res) {
         
     } catch (error) {
         console.error("Error en /addUser:", error);
-        res.send({status: 500}).send({ error: "Error al agregar el usuario. Intente nuevamente más tarde." });
+        res.send({status: 500}).send({ error: "Error al crear la publicacion. Intente nuevamente más tarde." });
     }
 });
 
@@ -185,6 +185,23 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error("Error en /login:", error);
         res.status(500).send({ error: "Error en el inicio de sesión. Intente nuevamente más tarde." });
+    }
+});
+
+app.post('/editarPub', async function(req, res) {
+    console.log("datos de la edicion: ", req.body);
+    try {
+        
+        await MySQL.realizarQuery(`UPDATE Publicacion SET (icono, nombrePub, precio, categoria) = ('${req.body.Url}','${req.body.name}',${req.body.precio},'${req.body.categoria}')  WHERE id = '${req.body.IdPubEdit}'`);
+        res.send({status: 200});
+
+        /*UPDATE Publicacion SET icono = "https://acdn.mitiendanube.com/stores/001/015/914/products/celtics-11-7c87aa369637f380cf16273223806189-640-0.jpg"
+,nombrePub = "short de los celtics", precio= 7560, categoria="moda"
+WHERE id = 24; */
+        
+    } catch (error) {
+        console.error("Error en /addUser:", error);
+        res.send({status: 500}).send({ error: "Error al editar la publicacion. Intente nuevamente más tarde." });
     }
 });
 

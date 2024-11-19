@@ -11,23 +11,28 @@ export default function editPublicacion() {
     const [precio, setPrecio] = useState(0)
     const [categoria, setCategoria] = useState("")
     const [Id, setIdCrea ] = useState(0)
+    const [IdPubEdit, setIdPubEdit ] = useState(0)
 
     useEffect(() => {
         manejarId();
         let publicacion = JSON.parse(localStorage.getItem('publicacion'));
         setURL(publicacion.icono);
+        setNamePub(publicacion.nombrePub);
+        setPrecio(publicacion.precio);
         setCategoria(publicacion.categoria);
+        setIdPubEdit(publicacion.id)
     },[])
 
-    async function crearPublicaion(){            
+    async function EditarPublicaion(){            
         const data = {
             Url: Url,
             name: name,
             precio: precio,
             categoria: categoria,
             Iduser: Id,
+            IdPubEdit: IdPubEdit, 
         }
-        const response = await fetch('http://localhost:4000/crearPub',{
+        const response = await fetch('http://localhost:4000/editarPub',{
             method:"POST",
             headers: {
                 "Content-Type": "application/json",
@@ -38,7 +43,7 @@ export default function editPublicacion() {
         var respuesta = await response.json();
 
         if (respuesta.status == 200)
-            alert("Publicaicon creada correctamente");
+            alert("Publicaicon editada correctamente");
             redirigir()
         if (respuesta.status == 500)
             alert("fallo al crear publicacion");
@@ -89,6 +94,7 @@ export default function editPublicacion() {
                     type="text"
                     placeholder="Ingresar nombre de la publicación"
                     id="name-crear"
+                    value={name}
                 />
                 <h2 className={styles.title}>Precio de la publicación</h2>
                 <input
@@ -97,6 +103,7 @@ export default function editPublicacion() {
                     type="text"
                     placeholder="Ingresar el precio de la publicación"
                     id="precio-crear"
+                    value={precio}
                 />
                 <h2 className={styles.title}>Categoría de la publicación</h2>
                 <select className={styles.select} onChange={manejarCategoria} value={categoria}>
@@ -112,8 +119,8 @@ export default function editPublicacion() {
                     <option value="vehiculos">Vehículos</option>
                     <option value="juguetes">Juguetes</option>
                 </select>
-                <button className={styles.button} onClick={crearPublicaion}>
-                    Crear publicación
+                <button className={styles.button} onClick={EditarPublicaion}>
+                Editar publicación
                 </button>
             </div>
         </div>
