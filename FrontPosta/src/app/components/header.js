@@ -21,7 +21,7 @@ export default function Header(props) {
          <header className={styles.header1} >
                 <div className={styles.topBar} >
                     <div className={styles.logo}>
-                    <img src="logo.png" alt="Logo" />
+                    <img src="images/logoCacho.png" className={styles.logoImage} alt="Logo" />
                  </div>
                     <div className={styles.searchBar}>
                      <input type="text" placeholder="Search..." />

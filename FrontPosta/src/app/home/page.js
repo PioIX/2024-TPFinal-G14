@@ -11,9 +11,10 @@ import styles from "./page.module.css";
 import Header from "../components/header";
 import Publicacion from "../components/publicacion";
 
-export default function Home() {
-    return (
-      <div className={styles.container}>
+export default function home(){
+
+    return(<>
+    <div className={styles.container}>
         <Header />
         <Publicacion 
           precio="$430.000" 
@@ -56,5 +57,5 @@ export default function Home() {
           imageUrl="https://www.homecollection.com.ar/pub/media/catalog/product/cache/image/e9c3970ab036de70892d86c6d221abfe/a/l/almohadon_simil_lana_4_1.jpg" 
         />
       </div>
-    );
-  }
+    </>)
+}
