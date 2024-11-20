@@ -11,7 +11,7 @@ import styles from "./page.module.css";
 import Header from "../components/header";
 import Publicacion from "../components/publicacion";
 import ListadoPublics from "../components/listadoPub";
-import Footer from '../components/footer'; // Ajusta la ruta según tu estructura de carpetas
+
 
 export default function Home({ Component, pageProps }) {
   const [publics, setPublics] = useState([]);
@@ -56,8 +56,6 @@ export default function Home({ Component, pageProps }) {
       <div className={styles.container}>
         <Header onClick={fetchProductos} />
         <ListadoPublics publics={publics}></ListadoPublics>
-        <Component {...pageProps} />
-        <Footer />
       </div>
     </>
   );
