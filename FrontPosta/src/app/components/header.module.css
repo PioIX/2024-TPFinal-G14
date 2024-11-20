@@ -113,7 +113,7 @@
     }
 }
 
-/* Estilos para pantallas aún más pequeñas (como teléfonos) */
+
 @media (max-width: 480px) {
     .topBar {
         flex-direction: column; /* Apila los elementos verticalmente */
