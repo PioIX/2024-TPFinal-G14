@@ -71,7 +71,7 @@
     background-color: #7aa40c;
     padding: 10px;
     border-radius: 5px;
-    flex-wrap: wrap; /* Ajusta los botones para que se acomoden en filas múltiples si es necesario */
+    flex-wrap: wrap; 
 }
 
 .navBar button {
@@ -87,7 +87,7 @@
     text-decoration: underline;
 }
 
-/* Estilos responsivos para dispositivos móviles */
+
 @media (max-width: 768px) {
     .searchBar input {
         width: 200px; /* Reduce el tamaño de la barra de búsqueda en pantallas pequeñas */
