@@ -90,15 +90,15 @@
 
 @media (max-width: 768px) {
     .searchBar input {
-        width: 200px; /* Reduce el tamaño de la barra de búsqueda en pantallas pequeñas */
+        width: 200px; 
     }
 
     .authButtons {
-        margin-top: 10px; /* Añade margen para separar los botones en pantallas pequeñas */
+        margin-top: 10px; 
     }
 
     .authButtons button {
-        padding: 10px; /* Agranda los botones para que sean más fáciles de tocar en pantallas táctiles */
+        padding: 10px; 
     }
 
     .navBar {
