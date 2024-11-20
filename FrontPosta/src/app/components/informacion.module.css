@@ -55,8 +55,8 @@
     text-align: center;
   }
   .descripcion {
-    font-size: 16px;
-    color: #666;
-    margin-top: 20px; /* Espacio superior para separar la descripción de la imagen */
-    max-width: 550px; /* Hace que la descripción tenga el mismo ancho que la imagen */
-  }
+    list-style-type: disc; /* Cambia el tipo de viñeta a un círculo */
+    padding-left: 20px; /* Añade un espacio a la izquierda para indentación */
+    color: #000000;
+    font-size: 20px;
+}
