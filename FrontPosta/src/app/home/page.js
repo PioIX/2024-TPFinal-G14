@@ -41,7 +41,6 @@ export default function Home({ Component, pageProps }) {
     const urlParams = new URLSearchParams(window.location.search);
     const categoriaURL = urlParams.get("categoria");
 
-    // Usamos un valor predeterminado para categoria si no hay categoriaURL
     const categoria = categoriaURL || event.target.name;
 
     await getPublicaciones(categoria);
