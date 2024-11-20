@@ -11,7 +11,6 @@ const Informacion = ({ precio, productName, imageUrl}) => {
   }
 
   async function comprar(){
-    // Asegúrate de obtener el valor de "PlataUsuario" de localStorage
 
     const urlParams = new URLSearchParams(window.location.search);
     const idPub = urlParams.get("idpub")
@@ -51,7 +50,7 @@ const Informacion = ({ precio, productName, imageUrl}) => {
         
         setTimeout(() => {
           location.reload();
-        }, 1000); // Retardo de 1 segundo
+        }, 1000);
       } else if (respuesta.status === 500) {
         alert("Falló la compra.");
       } else {
