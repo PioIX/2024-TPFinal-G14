@@ -13,8 +13,6 @@ export default function Login (props) {
         const password = getPasswordLogin()
     }
 
-    
-
     return(
         <>
             <h1>Login</h1>

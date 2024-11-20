@@ -5,5 +5,4 @@ const Title = ({titulo}) => {
         <h1>{titulo}</h1>
     )
 }
-
 export default Title;
