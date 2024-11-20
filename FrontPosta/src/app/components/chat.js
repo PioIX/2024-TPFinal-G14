@@ -9,7 +9,6 @@ export default function Chat ({id, text, image}) {
         
     }
     
-
     return (
         <>
             <button className={styles.chatButton} onClick={redirigir}>

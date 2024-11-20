@@ -1,4 +1,4 @@
-/* Reset and base styles */
+
 
 .body {
     font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap; /* Permite que los elementos se ajusten cuando no hay suficiente espacio */
+    flex-wrap: wrap; 
 }
 
 .logoImage {
@@ -34,11 +34,11 @@
     border-radius: 5px;
 }
 
-/* Botones de autenticación */
+
 .authButtons {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espacio entre elementos */
+    gap: 15px; 
 }
 
 
