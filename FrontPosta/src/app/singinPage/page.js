@@ -16,35 +16,7 @@ export default function loginPage(){
     const [contraseña, setContraseña] = useState("");
     const [mail, setMail] =useState("")
     const [usuarioLoged, setUsuarioLoged] = useState(0);
-
-    /*async function login() {
-        const data = {
-            nombre: nombre,
-            contraseña: contraseña,
-        }
-
-
-        const response = await fetch('http://localhost:4000/login',{
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json",
-              },
-            body:JSON.stringify(data),
-        })
-        
-        var respuesta = await response.json();
-        console.log(respuesta)
-        localStorage.setItem("userId", respuesta.id)
-        if (respuesta.status == 200) {
-            setUsuarioLoged(respuesta.id)
-            alert("ingreso exitoso");
-            redirigir();
-        } else {
-            alert("el ususario o la contraseña es incorrecta");
-        }
-            
-    }*/
-
+    
     async function register(){            
         const data = {
             nombre: nombre,
