@@ -1,9 +1,9 @@
 .cuadro {
-  border: 1px solid #ddd; 
+  border: 1px solid #000000e1; 
   border-radius: 8px;
   padding: 16px;
   max-width: 300px; 
-  background-color: #b8a36a; 
+  background-color: #79a40c ; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   text-align: center; 
   transition: box-shadow 0.3s; 
