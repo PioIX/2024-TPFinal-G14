@@ -136,7 +136,7 @@ app.post('/addUser', async function(req, res) {
         if (usuarioExistente.length !== 0) {
             res.send({texto: "Ya existe ese usuario", status: 204});
         } else {
-            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 10000)`);
+            await MySQL.realizarQuery(`INSERT INTO Usuarios (nombre, contraseña, mail, Plata) VALUES ('${req.body.nombre}', '${req.body.contraseña}', '${req.body.mail}', 1000000)`);
             let nuevoUsuario = await MySQL.realizarQuery(`select * from Usuarios where Nombre = '${req.body.nombre}'`);
             res.send({ res: "usuario ingresado", id: `${nuevoUsuario[0].id}`, status: 200 });
         }
@@ -192,12 +192,15 @@ app.post('/editarPub', async function(req, res) {
     console.log("datos de la edicion: ", req.body);
     try {
         
-        await MySQL.realizarQuery(`UPDATE Publicacion SET (icono, nombrePub, precio, categoria) = ('${req.body.Url}','${req.body.name}',${req.body.precio},'${req.body.categoria}')  WHERE id = '${req.body.IdPubEdit}'`);
+        await MySQL.realizarQuery(`UPDATE Publicacion SET icono = '${req.body.Url}',nombrePub = '${req.body.name}', precio= ${req.body.precio}, categoria='${req.body.categoria}' WHERE id = '${req.body.IdPubEdit}';`);
         res.send({status: 200});
 
         /*UPDATE Publicacion SET icono = "https://acdn.mitiendanube.com/stores/001/015/914/products/celtics-11-7c87aa369637f380cf16273223806189-640-0.jpg"
-,nombrePub = "short de los celtics", precio= 7560, categoria="moda"
-WHERE id = 24; */
+        ,nombrePub = "short de los celtics", precio= 7560, categoria="moda"
+        WHERE id = 24; */
+
+       /* UPDATE Publicacion SET icono = '${req.body.Url}',nombrePub = '${req.body.name}', precio= ${req.body.precio}, categoria='${req.body.categoria}' WHERE id = '${req.body.IdPubEdit}'; */
+
         
     } catch (error) {
         console.error("Error en /addUser:", error);
